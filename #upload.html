@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>설문등록창</title>
+
+    <script type="text/javascript">
+      function backToList(obj) {
+        obj.action = 'board/listArticles.do';
+        obj.submit();
+      }
+
+      //로그아웃 기능 구현
+      function logout() {
+        alert('로그아웃 되었습니다.');
+        window.location.href = 'login.html';
+      }
+
+      // 스크롤 이벤트 핸들러
+      window.onscroll = function () {
+        var topbar = document.querySelector('.topbar');
+        var sidenav = document.querySelector('.sidenav');
+        if (window.scrollY > 0) {
+          topbar.style.top = '0';
+          sidenav.style.top = '60px';
+        } else {
+          topbar.style.top = '-60px';
+          sidenav.style.top = '0';
+        }
+      };
+
+      //학부 선택에 따른 전공 과목 표시 구분
+      function updateComboBox2() {
+        var comboBox1 = document.getElementById('comboBox1');
+        var comboBox2 = document.getElementById('comboBox2');
+        var selectedOption = comboBox1.options[comboBox1.selectedIndex].value;
+
+        // 먼저 comboBox2의 모든 옵션을 제거합니다.
+        while (comboBox2.options.length > 0) {
+          comboBox2.remove(0);
+        }
+
+        // comboBox1에서 선택한 값에 따라 comboBox2에 옵션을 추가합니다.
+        if (selectedOption === '항공학부') {
+          var options = [
+            '항공소프트웨어공학과',
+            '항공산업공학과',
+            '항공운항학과',
+            '헬리콥터조종학과',
+            '항공전자공학과',
+            '무인항공기학과',
+            '항공교통물류학과',
+            '항공관광학과',
+            '항공정비학과',
+            '항공기계공학과',
+          ];
+          for (var i = 0; i < options.length; i++) {
+            var option = document.createElement('option');
+            option.text = options[i];
+            comboBox2.add(option);
+          }
+        } else if (selectedOption == '항공융합학부') {
+          var options = [
+            '공항행정학과',
+            '항공컴퓨터학과',
+            '항공보안학과',
+            '호텔카지노관광학과',
+            '식품공학과',
+            '항공외국어학과',
+            '국제관계학과',
+            '신소재화학공학과',
+            '환경.토목.건축학과',
+            '전기전자공학과',
+          ];
+          for (var i = 0; i < options.length; i++) {
+            var option = document.createElement('option');
+            option.text = options[i];
+            comboBox2.add(option);
+          }
+        } else if (selectedOption == '보건학부') {
+          var options = [
+            '물리치료학과',
+            '작업치료학과',
+            '바이오식품과학과',
+            '보건상담복지학과',
+            '피부미용화장품과학과',
+            '방사선학과',
+            '간호학과',
+            '치위생학과',
+            '안전보건학과',
+            '뷰티바이오학과',
+            '사회복지학과',
+            '의료재활학과',
+          ];
+          for (var i = 0; i < options.length; i++) {
+            var option = document.createElement('option');
+            option.text = options[i];
+            comboBox2.add(option);
+          }
+        } else if (selectedOption == '디자인.엔터미디어학부') {
+          var options = [
+            '문화재보존학과',
+            '영화영상학과',
+            '미디어문예창작학과',
+            '영상애니메이션학과',
+            '디자인융합학과',
+            '실용음악과',
+            '공간디자인학과',
+            '산업디자인학과',
+            '시각디자인학과',
+            '패션디자인학과',
+          ];
+          for (var i = 0; i < options.length; i++) {
+            var option = document.createElement('option');
+            option.text = options[i];
+            comboBox2.add(option);
+          }
+        } else if (selectedOption == '해양.스포츠학부') {
+          var options = [
+            '경호비서학과',
+            '레저해양스포츠학과',
+            '수산생명의학과',
+            '해양경찰학과',
+          ];
+          for (var i = 0; i < options.length; i++) {
+            var option = document.createElement('option');
+            option.text = options[i];
+            comboBox2.add(option);
+          }
+        } else if (selectedOption == '자유전공학부') {
+          var options = ['자유전공학과'];
+          for (var i = 0; i < options.length; i++) {
+            var option = document.createElement('option');
+            option.text = options[i];
+            comboBox2.add(option);
+          }
+        }
+      }
+    </script>
+
+    <style>
+      body {
+        background-color: #fff;
+      }
+
+      .background-image {
+        background-image: url('img/univ.jpg');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.5;
+      }
+
+      .white-rectangle {
+        width: 90%;
+        height: 86.5%;
+        background-color: beige;
+        position: absolute;
+        top: 100px;
+        left: 87px;
+        opacity: 0.65;
+        justify-content: center;
+      }
+
+      /* 초기 스타일 */
+      .topbar {
+        height: 80px;
+        background-color: #222;
+        color: #fff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+        position: fixed;
+        top: 0;
+        width: 92%;
+        left: 65px;
+        transition: top 0.3s;
+        font-size: 20px; /* 텍스트 크기 고정 */
+      }
+
+      /* 상단 바 링크 스타일 */
+      .topbar a {
+        padding: 0px 5px;
+        text-decoration: none;
+        color: #fff;
+        display: block;
+        margin-right: 10px;
+        font-size: 30px;
+      }
+
+      /* 메뉴 링크 스타일 (마우스 호버 시) */
+      .topbar a:hover {
+        background-color: #444;
+      }
+
+      /* 로고 이미지 스타일 */
+      .logo {
+        max-height: 65px; /* 최대 높이 설정 */
+      }
+
+      /*로그인 정보 스타일*/
+      .login-info {
+        color: #fff;
+        display: flex;
+        align-items: center;
+      }
+
+      .username {
+        margin-right: 10px;
+      }
+
+      /*로그아웃 버튼 스타일*/
+      .logout-button {
+        background-color: rgb(76, 47, 189);
+        color: #fff;
+        padding: 5px 10px;
+        border: 1;
+        cursor: pointer;
+        margin-right: 10px;
+        position: relative;
+        right: 2%;
+        font-size: 15px;
+      }
+
+      /*버튼 스타일*/
+      button {
+        background-color: rgb(76, 47, 189);
+        color: #fff;
+        padding: 10px 10px;
+        width: 90px;
+        height: 40px;
+        border: 0.1px;
+        cursor: pointer;
+        margin-right: 30px;
+        position: relative;
+        bottom: -10px;
+        left: 45%;
+      }
+
+      /*설문등록창*/
+      .regi-box {
+        text-align: left;
+        width: 95%;
+        height: 85%;
+        position: absolute;
+        top: 80px;
+        left: 87px;
+        position: fixed;
+      }
+
+      h1 {
+        text-align: center;
+        font-size: 37px;
+      }
+
+      label {
+        display: block;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        font-size: 17px;
+        font-weight: bold;
+      }
+
+      textarea {
+        resize: none;
+        font-size: 16px;
+      }
+
+      input[type='text'],
+      input[type='url'],
+      input[type='file'],
+      select {
+        width: 60%;
+        padding: 5px;
+        margin: 5px 0;
+        border-radius: 5px;
+        box-sizing: border-box 10px;
+        font-size: 16px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="background-image"></div>
+    <div class="white-rectangle"></div>
+    <div class="topbar">
+      <img class="logo" src="/logo" alt="로고 이미지" />
+      <a href="/upload"><b>설문 등록</b></a>
+      <a href="/mypage"><b>마이페이지</b></a>
+      <div class="login-info">
+        <div class="username"><%= data.name %>님 환영합니다.</div>
+        <div class="logout-button" id="logoutBtn" onclick="logout()">
+          로그아웃
+        </div>
+      </div>
+    </div>
+
+    <!-- 설문등록 창-->
+    <div style="overflow-y:scroll;"class="regi-box">
+      <h1>설문 등록</h1>
+      <table border="1" align="center">
+        <tr>
+          <td width="150" align="center" bgcolor="lightgrey">
+            <label for="sur_title">설문 제목</label>
+          </td>
+          <td>
+            <input type="text" id="sur_title" />
+            <input type="hidden" name="sur_title" />
+          </td>
+        </tr>
+
+        <tr>
+          <td width="150" align="center" bgcolor="lightgrey">
+            <label for="sur_link">설문 링크</label>
+          </td>
+          <td>
+            <input type="url" id="sur_link" />
+            <input type="hidden" name="sur_link" />
+          </td>
+        </tr>
+
+        <tr>
+          <td width="150" align="center" bgcolor="lightgrey">
+            <label for="sur_content">설 명</label>
+          </td>
+          <td>
+            <textarea
+              rows="20"
+              cols="60"
+              name="sur_content"
+              id="sur_content"
+            ></textarea>
+          </td>
+        </tr>
+
+        <tr>
+          <td width="25%" align="center" bgcolor="lightgrey" rowspan="2">
+            <label for="thumbnail">대표 이미지 첨부</label>
+          </td>
+          <!-- <td>
+               <input type="image" name="thumbnail" />
+               <img src="#" id="i_thumbnail" />
+            </td>  -->
+        </tr>
+
+        <!-- <tr>
+          <td>
+            <input
+              type="file"
+              accept="image/*"
+              name="thumbnail"
+              id="thumbnail"
+              name="thumbnail"
+              onchange="readURL(this);"
+            /><br />
+            <img id="preview" />
+          </td>
+        </tr> -->
+        <tr>
+          <td>
+            <input
+              type="file"
+              accept="image/*"
+              name="thumbnail"
+              id="thumbnail"
+              name="thumbnail"
+            /><br />
+            <img id="preview" />
+          </td>
+        </tr>
+
+        <tr>
+          <td width="20%" align="center" bgcolor="lightgrey">
+            <label for="ymd">기간</label>
+          </td>
+          <td>
+            <input type="date" id="st_date" />부터
+            <input type="date" id="end_date"/>까지
+            
+          </td>
+        </tr>
+        <!-- <tr>
+          <td width="150" align="center" bgcolor="lightgrey">
+            <label for="sur_target">설문 대상</label>
+          </td>
+          <td> -->
+            <!-- sur_dep -->
+            <!-- <label for="comboBox1">학부 선택:</label>
+            <select id="comboBox1" name ="sur_dep" onchange="updateComboBox2()">
+              <option value="">상관없음</option>
+              <option value="항공학부">항공학부</option>
+              <option value="항공융합학부">항공융합학부</option>
+              <option value="보건학부">보건학부</option>
+              <option value="디자인.엔터미디어학부">
+                디자인.엔터미디어학부
+              </option>
+              <option value="해양.스포츠학부">해양.스포츠학부</option>
+              <option value="자유전공학부">자유전공학부</option>
+            </select> -->
+            <!-- sur_major -->
+            <!-- <label for="comboBox2">전공 선택:</label>
+            <select id="comboBox2" name ="sur_major">
+              <option value="">상관없음</option>
+            </select>
+          </td>
+        </tr> -->
+      </table>
+      <div>
+        <button type="submit">설문 등록</button>
+        <button type="reset">취 소</button>
+      </div>
+    </div>
+  </body>
+</html>

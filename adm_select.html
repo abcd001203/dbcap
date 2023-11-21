@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      //로그아웃 기능 구현
+      function logout() {
+        alert('로그아웃 되었습니다.');
+        window.location.href = 'login.html';
+      }
+    </script>
+    <title>관리자 글 상세보기</title>
+  </head>
+  <style>
+    /*배경 이미지 설정*/
+    body {
+      background-color: #fff;
+    }
+
+    .background-image {
+      background-image: url('img/univ.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.5;
+    }
+
+    /*흰색 파트*/
+    .white-rectangle {
+      width: 84.2%;
+      height: 81.5%;
+      background-color: beige;
+      position: absolute;
+      top: 13.5%;
+      left: 10.5%;
+      opacity: 0.65;
+    }
+
+    .profile-section {
+      text-align: left;
+      background-color: rgb(255, 255, 255, 0, 0.7);
+      padding: 20px;
+      border-radius: 10px;
+      position: absolute;
+      top: 15%;
+      left: 13.5%;
+      width: 350px;
+      height: 100px;
+    }
+
+    h1 {
+      font-weight: bold;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    input[type='text'],
+    input[type='password'],
+    select {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+      border-radius: 1px;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color: rgb(76, 47, 189);
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    /* 초기 스타일 */
+    .topbar {
+      height: 80px;
+      background-color: #222;
+      color: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+      position: fixed;
+      top: 0;
+      width: 92%;
+      transition: top 0.3s;
+      font-size: 30px; /* 텍스트 크기 고정 */
+    }
+
+    /* 상단 바 링크 스타일 */
+    .topbar a {
+      padding: 0px 5px;
+      text-decoration: none;
+      color: #fff;
+      display: block;
+      margin-right: 10px;
+      font-size: 30px;
+    }
+
+    /* 메뉴 링크 스타일 (마우스 호버 시) */
+    .topbar a:hover {
+      background-color: #444;
+    }
+
+    /* 로고 이미지 스타일 */
+    .logo {
+      max-height: 65px; /* 최대 높이 설정 */
+    }
+
+    /* 로그인 정보 스타일 */
+    .login-info {
+      color: #fff;
+      display: flex;
+      align-items: center;
+    }
+
+    .username {
+      margin-right: 10px;
+    }
+
+    /* 로그아웃 버튼 스타일 */
+    .logout-button {
+      background-color: rgb(76, 47, 189);
+      color: #fff;
+      padding: 5px 10px;
+      border: 1;
+      cursor: pointer;
+      margin-right: 10px;
+      position: relative;
+      right: 2%;
+      font-size: 15px;
+    }
+
+    /*설문조사 테이블 설정*/
+    .sur-table {
+      position: absolute;
+      top: 15%;
+      left: 15%;
+      width: 70%;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      padding: 10px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #555;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    .return-button,
+    .delete-button {
+      background-color: #4caf50;
+      color: white;
+      padding: 5px 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 2px;
+    }
+
+    .return-button:hover,
+    .delete-button:hover {
+      background-color: #45a049;
+    }
+  </style>
+  <body>
+    <!-- 배경 이미지-->
+    <div class="background-image"></div>
+    <div class="white-rectangle"></div>
+
+    <!-- 상단 바 -->
+    <div class="topbar">
+      <img class="logo" src="img/logo.jpg" alt="로고 이미지" />
+      <a href="adm_sur_mng.html">설문 관리</a>
+      <a href="usermanage.html">회원 목록</a>
+      <div class="login-info">
+        <div class="username">adm님 환영합니다.</div>
+        <div class="logout-button" onclick="logout()">로그아웃</div>
+      </div>
+    </div>
+
+    <div class="sur-table">
+      <table border="1">
+        <thead>
+          <tr>
+            <th>설문 이미지</th>
+            <th>설문 제목</th>
+            <th>설문 기간</th>
+            <th>등록자</th>
+            <th>삭제하기</th>
+            <th>이전</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Add survey data dynamically here -->
+          <tr>
+            <td rowspan="4">
+              <img
+                src="img/dawn.jpg"
+                alt="설문 이미지"
+                style="max-width: 100px; max-height: 100px"
+              />
+            </td>
+            <td id="survey-title"></td>
+            <td id="survey"></td>
+            <td id="name"></td>
+            <td>
+              <button class="delete-button" onclick="deleteSurvey()">
+                삭제하기
+              </button>
+            </td>
+            <td>
+              <button class="return-button" onclick="returnSurvey()">
+                이전
+              </button>
+            </td>
+          </tr>
+          <!-- Add more rows as needed -->
+        </tbody>
+      </table>
+    </div>
+    <!-- 사이드 메뉴 바 -->
+    <div class="sidenav">
+      <a href="adm_sur_mng.html"><b>설문 관리</b></a>
+      <a href="del_surlist.html"><b>삭제 설문 목록</b></a>
+    </div>
+  </body>
+</html>
