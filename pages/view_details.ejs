@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>상세보기</title>
+
+    <script type="text/javascript">
+      function backToList(obj) {
+        obj.action = 'board/listArticles.do';
+        obj.submit();
+      }
+
+      // 스크롤 이벤트 핸들러
+      window.onscroll = function () {
+        var topbar = document.querySelector('.topbar');
+        var sidenav = document.querySelector('.sidenav');
+        if (window.scrollY > 0) {
+          topbar.style.top = '0';
+          sidenav.style.top = '60px';
+        } else {
+          topbar.style.top = '-60px';
+          sidenav.style.top = '0';
+        }
+      };
+    </script>
+
+    <style>
+      body {
+        background-color: #fff;
+      }
+      p {
+        overflow-wrap: break-word;
+        max-width: 55ch;
+      }
+  
+
+      .background-image {
+        background-image: url('/univ');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.5;
+      }
+
+      .white-rectangle {
+        width: 90%;
+        height: 86.5%;
+        background-color: beige;
+        position: absolute;
+        top: 100px;
+        left: 87px;
+        opacity: 0.65;
+        justify-content: center;
+      }
+
+      /*설문창*/
+      .regi-box {
+        text-align: left;
+        width: 95%;
+        height: 85%;
+        position: absolute;
+        top: 80px;
+        left: 87px;
+        position: fixed;
+      }
+
+      h1 {
+        text-align: center;
+        font-size: 37px;
+      }
+
+      label {
+        display: block;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        font-size: 17px;
+        font-weight: bold;
+      }
+
+      textarea {
+        resize: none;
+        font-size: 16px;
+      }
+
+      input[type='text'],
+      input[type='url'],
+      input[type='file'],
+      select {
+        width: 60%;
+        padding: 5px;
+        margin: 5px 0;
+        border-radius: 5px;
+        box-sizing: border-box 10px;
+        font-size: 16px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- 상세보기 창-->
+    <div class="background-image"></div>
+    <div class="white-rectangle"></div>
+    <div class="regi-box">
+      <h1>상세보기</h1>
+      <table border="1" align="center">
+        <tr>
+            <td width="25%" align="center" bgcolor="lightgrey" rowspan="2">
+              <label for="thumbnail">대표 이미지</label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+                <img src='/<%= data.thumbnail %>' style="max-width: 500px; max-height: 500px"/>
+            </td>
+          </tr>
+        <tr>
+          <td width="150" align="center" bgcolor="lightgrey">
+            <label for="sur_title">설문 제목</label>
+          </td>
+          <td>
+            <h3><%= data.sur_title %></h3>
+          </td>
+        </tr>
+
+        <td width="150" align="center" bgcolor="lightgrey">
+          <label for="name">작성자</label>
+        </td>
+        <td>
+          <h4><%= data.name %></h4>
+        </td>
+      </tr>
+
+        <tr>
+          <td width="150" align="center" bgcolor="lightgrey">
+            <label for="sur_link">설문 링크</label>
+          </td>
+          <td>
+            <a target="_blank" href ="<%= data.sur_link %>"><%= data.sur_link %></a>
+          </td>
+        </tr>
+
+        <tr>
+          <td width="150" align="center" bgcolor="lightgrey">
+            <label for="sur_content">설 명</label>
+          </td>
+          <td>
+            <p><%= data.sur_content %></p>
+            <!-- <textarea
+              rows="20"
+              cols="60"
+              name="sur_content"
+              id="sur_content"
+              readonly
+            ><%= data.sur_content %></textarea> -->
+          </td>
+        </tr>
+
+        <tr>
+          <td width="20%" align="center" bgcolor="lightgrey">
+            <label for="ymd">기간</label>
+          </td>
+          <td>
+            <p>&nbsp;&nbsp;<%= formatDate(data.start_date) %> ~ <%= formatDate(data.end_date) %></p>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <% function formatDate(dateString) {
+        const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+        const date = new Date(dateString);
+        return date.toLocaleDateString('ko-KR', options);
+    } %>
+  </body>
+</html>

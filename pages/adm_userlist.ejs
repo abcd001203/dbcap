@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>회원 목록</title>
+    <script>
+      //로그아웃 기능 구현
+      function logout() {
+        alert('로그아웃 되었습니다.');
+        window.location.href = '/logout';
+      }
+    </script>
+    <style>
+      /*배경 이미지 설정*/
+      body {
+        background-color: #fff;
+      }
+
+      .background-image {
+        background-image: url('/univ');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.5;
+      }
+
+      /*흰색 파트*/
+      .white-rectangle {
+        width: 84.2%;
+        height: 81.5%;
+        background-color: beige;
+        position: absolute;
+        top: 13.5%;
+        left: 10.5%;
+        opacity: 0.65;
+      }
+
+      /* 초기 스타일 */
+      .topbar {
+        height: 80px;
+        background-color: #222;
+        color: #fff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+        position: fixed;
+        top: 0;
+        width: 92%;
+        transition: top 0.3s;
+        font-size: 20px; /* 텍스트 크기 고정 */
+      }
+
+      /* 상단 바 링크 스타일 */
+      .topbar a {
+        padding: 0px 5px;
+        text-decoration: none;
+        color: #fff;
+        display: block;
+        margin-right: 10px;
+        font-size: 30px;
+      }
+
+      /* 메뉴 링크 스타일 (마우스 호버 시) */
+      .topbar a:hover {
+        background-color: #444;
+      }
+
+      /* 로고 이미지 스타일 */
+      .logo {
+        max-height: 65px; /* 최대 높이 설정 */
+      }
+
+      /* 로그인 정보 스타일 */
+      .login-info {
+        color: #fff;
+        display: flex;
+        align-items: center;
+      }
+
+      .username {
+        margin-right: 10px;
+      }
+
+      /* 로그아웃 버튼 스타일 */
+      .logout-button {
+        background-color: rgb(76, 47, 189);
+        color: #fff;
+        padding: 5px 10px;
+        border: 1;
+        cursor: pointer;
+        margin-right: 10px;
+        position: relative;
+        right: 2%;
+        font-size: 15px;
+      }
+
+      /* 사이드 메뉴 바 스타일 */
+      .sidenav {
+        height: 80%;
+        width: 170px;
+        position: fixed;
+        top: 110px;
+        left: 20;
+        background-color: #333;
+        padding-top: 20px;
+      }
+
+      /* 메뉴 링크 스타일 */
+      .sidenav a {
+        padding: 15px 25px;
+        text-decoration: none;
+        font-size: 30px;
+        color: #fff;
+        display: block;
+      }
+
+      /* 메뉴 링크 스타일 (마우스 호버 시) */
+      .sidenav a:hover {
+        background-color: #444;
+      }
+
+      .sur-table{
+        position: absolute;
+        top: 15%;
+        left: 15%;
+        width: 75%;
+      }
+
+      table{
+        width:100%;
+        border-collapse: collapse;
+      }
+
+      th,
+    td {
+      padding: 10px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #555;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+    .edit-button,
+    .delete-button {
+      background-color: red;
+      color: white;
+      padding: 5px 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 2px;
+    }
+
+    .edit-button:hover,
+    .delete-button:hover {
+      background-color: red;
+    }
+    </style>
+  </head>
+  <body>
+    <!-- 배경 이미지-->
+    <div class="background-image"></div>
+    <div class="white-rectangle"></div>
+
+    <!-- 상단 바 -->
+    <div class="topbar">
+        <a href="/adm_main">
+        <img class="logo" src="/logo" alt="로고 이미지" /></a>
+        <a href="/adm_approval"><b>설문 관리</b></a>
+        <a href="/adm_userlist"><b>회원 목록</b></a>
+        
+        <div class="login-info">
+          <div class="username"><%= name %>님 환영합니다.</div>
+          <div class="logout-button" onclick="logout()">로그아웃</div>
+        </div>
+      </div>
+
+    <!-- 사이드 메뉴 바 -->
+    <div class="sidenav">
+        <a href="/adm_userlist"><b>회원목록</b></a>
+    </div>
+      <div style="overflow-y: scroll; height: 500px;">
+        <!-- 회원 목록 테이블 -->
+        <div class="sur-table">
+          <table border="1">
+            <thead>
+              <tr>
+                <th>이름</th>
+                <th>학번</th>
+                <th>학년</th>
+                <th>학과</th>
+                <th>회원삭제</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% for(var i = 0; i < data.length; i++) { %>
+              <tr>
+                <td><%= data[i].name %></td>
+                <td><%= data[i].id %></td>
+                <td><%= data[i].grade %></td>
+                <td><%= data[i].major %></td>
+                <td>
+                  <button class="delete-button" onclick="deleteUser('/delet_user/<%= data[i].id %>')">회원 삭제</button>
+                </td>
+              </tr>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <script>
+        ///회원 삭제 기능
+        function deleteUser(link) {
+            var result = confirm("정말로 삭제하시겠습니까?");
+            if (result){
+                window.location.href = link;
+            }else{
+                alert("취소되었습니다."); 
+                document.location.href="/adm_userlist";
+            }
+        }
+        </script>
+  </body>
+</html>

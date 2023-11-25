@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>설문등록창</title>
+
+    <script type="text/javascript">
+      function backToList(obj) {
+        obj.action = 'board/listArticles.do';
+        obj.submit();
+      }
+
+      //로그아웃 기능 구현
+      function logout() {
+        alert('로그아웃 되었습니다.');
+        window.location.href = '/logout';
+      }
+
+      // 스크롤 이벤트 핸들러
+      window.onscroll = function () {
+        var topbar = document.querySelector('.topbar');
+        var sidenav = document.querySelector('.sidenav');
+        if (window.scrollY > 0) {
+          topbar.style.top = '0';
+          sidenav.style.top = '60px';
+        } else {
+          topbar.style.top = '-60px';
+          sidenav.style.top = '0';
+        }
+      };
+    </script>
+
+    <style>
+      body {
+        background-color: #fff;
+      }
+
+      .background-image {
+        background-image: url('/univ');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.5;
+      }
+
+      .white-rectangle {
+        width: 90%;
+        height: 86.5%;
+        background-color: beige;
+        position: absolute;
+        top: 100px;
+        left: 87px;
+        opacity: 0.65;
+        justify-content: center;
+      }
+
+      /* 초기 스타일 */
+      .topbar {
+        height: 80px;
+        background-color: #222;
+        color: #fff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+        position: fixed;
+        top: 0;
+        width: 92%;
+        left: 65px;
+        transition: top 0.3s;
+        font-size: 20px; /* 텍스트 크기 고정 */
+      }
+
+      /* 상단 바 링크 스타일 */
+      .topbar a {
+        padding: 0px 5px;
+        text-decoration: none;
+        color: #fff;
+        display: block;
+        margin-right: 10px;
+        font-size: 30px;
+      }
+
+      /* 메뉴 링크 스타일 (마우스 호버 시) */
+      .topbar a:hover {
+        background-color: #444;
+      }
+
+      /* 로고 이미지 스타일 */
+      .logo {
+        max-height: 65px; /* 최대 높이 설정 */
+      }
+
+      /*로그인 정보 스타일*/
+      .login-info {
+        color: #fff;
+        display: flex;
+        align-items: center;
+      }
+
+      .username {
+        margin-right: 10px;
+      }
+
+      /*로그아웃 버튼 스타일*/
+      .logout-button {
+        background-color: rgb(76, 47, 189);
+        color: #fff;
+        padding: 5px 10px;
+        border: 1;
+        cursor: pointer;
+        margin-right: 10px;
+        position: relative;
+        right: 2%;
+        font-size: 15px;
+      }
+
+      /*버튼 스타일*/
+      button {
+        background-color: rgb(76, 47, 189);
+        color: #fff;
+        padding: 10px 10px;
+        width: 90px;
+        height: 40px;
+        border: 0.1px;
+        cursor: pointer;
+        margin-right: 30px;
+        position: relative;
+        bottom: -10px;
+        left: 45%;
+      }
+
+      /*설문등록창*/
+      .regi-box {
+        text-align: left;
+        width: 95%;
+        height: 85%;
+        position: absolute;
+        top: 80px;
+        left: 87px;
+        position: fixed;
+      }
+
+      h1 {
+        text-align: center;
+        font-size: 37px;
+      }
+
+      label {
+        display: block;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        font-size: 17px;
+        font-weight: bold;
+      }
+
+      textarea {
+        resize: none;
+        font-size: 16px;
+      }
+
+      input[type='text'],
+      input[type='url'],
+      input[type='file'],
+      select {
+        width: 60%;
+        padding: 5px;
+        margin: 5px 0;
+        border-radius: 5px;
+        box-sizing: border-box 10px;
+        font-size: 16px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="background-image"></div>
+    <div class="white-rectangle"></div>
+    <div class="topbar">
+      <a href="/main">
+        <img class="logo" src="/logo" alt="로고 이미지" /></a>
+      <a href="/upload"><b>설문 등록</b></a>
+      <a href="/mypage"><b>마이페이지</b></a>
+      <div class="login-info">
+        <div class="username"><%= data.name %>님 환영합니다.</div>
+        <div class="logout-button" id="logoutBtn" onclick="logout()">
+          로그아웃
+        </div>
+      </div>
+    </div>
+
+    <!-- 설문등록 창-->
+    <form action="/upload" id="uploda" method="POST" enctype="multipart/form-data">
+    <div class="regi-box">
+      <h1>설문 등록</h1>
+      <table border="1" align="center">
+        <tr>
+          <td width="150" align="center" bgcolor="lightgrey">
+            <label for="sur_title">설문 제목</label>
+          </td>
+          <td>
+            <input type="text" id="sur_title" name="sur_title" required/>
+            <input type="hidden"/>
+          </td>
+        </tr>
+
+        <tr>
+          <td width="150" align="center" bgcolor="lightgrey">
+            <label for="sur_link">설문 링크</label>
+          </td>
+          <td>
+            <input type="url" id="sur_link" name="sur_link" required/>
+            <input type="hidden"/>
+          </td>
+        </tr>
+
+        <tr>
+          <td width="150" align="center" bgcolor="lightgrey">
+            <label for="sur_content">설 명</label>
+          </td>
+          <td>
+            <textarea
+              rows="20"
+              cols="60"
+              name="sur_content"
+              id="sur_content"
+              required
+            ></textarea>
+          </td>
+        </tr>
+
+        <tr>
+          <td width="25%" align="center" bgcolor="lightgrey" rowspan="2">
+            <label for="thumbnail">대표 이미지 첨부</label>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              type="file"
+              accept="image/*"
+              name="thumbnail"
+              id="thumbnail"
+              name="thumbnail"
+            /><br />
+            <img id="preview" />
+          </td>
+        </tr>
+
+        <tr>
+          <td width="20%" align="center" bgcolor="lightgrey">
+            <label for="ymd">기간</label>
+          </td>
+          <td>
+            <input type="date" id="st_date" name="st_date"required/>부터
+            <input type="date" id="end_date" name="end_date"required/>까지
+            
+          </td>
+        </tr>
+      </table>
+      <div>
+        <button type="submit">설문 등록</button>
+      </div>
+    </div>
+</form>
+  </body>
+</html>

@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>메인</title>
+    <script>
+      // 스크롤 이벤트 핸들러
+      window.onscroll = function () {
+        var topbar = document.querySelector('.topbar');
+        var sidenav = document.querySelector('.sidenav');
+        if (window.scrollY > 0) {
+          topbar.style.top = '0';
+          sidenav.style.top = '60px';
+        } else {
+          topbar.style.top = '-60px';
+          sidenav.style.top = '0';
+        }
+      };
+
+      //로그아웃 기능 구현
+      function logout() {
+        alert('로그아웃 되었습니다.');
+        window.location.href = '/logout';
+      }
+
+      // 검색 기능 구현
+      function searchSurvey() {
+        var category = document.getElementById('category').value;
+        var searchValue = document.getElementById('search').value;
+        
+        window.location.href = '/search?category=' + category + '&search=' + searchValue;
+      }
+
+      //상세보기 기능 구현
+      function showSurvey(){
+        window.location.href='survey_show.html';
+      }
+    </script>
+    <style>
+      /*배경 이미지 설정*/
+      body {
+        background-color: #fff;
+      }
+
+      .background-image {
+        background-image: url('/univ');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.5;
+      }
+
+      /*흰색 파트*/
+      .white-rectangle {
+        width: 84.2%;
+        height: 81.5%;
+        background-color: beige;
+        position: absolute;
+        top: 13.5%;
+        left: 7.5%;
+        opacity: 0.65;
+      }
+
+      .profile-section {
+        text-align: left;
+        background-color: rgb(255, 255, 255, 0, 0.7);
+        padding: 20px;
+        border-radius: 10px;
+        position: absolute;
+        top: 15%;
+        left: 13.5%;
+        width: 350px;
+        height: 100px;
+      }
+
+      h1 {
+        font-weight: bold;
+      }
+
+      label {
+        display: block;
+        margin-top: 10px;
+        font-weight: bold;
+        font-size: 18px;
+      }
+
+      input[type='text'],
+      input[type='password'],
+      select {
+        width: 100%;
+        padding: 10px;
+        margin: 5px 0;
+        border-radius: 1px;
+        box-sizing: border-box;
+      }
+
+      button {
+        background-color: rgb(76, 47, 189);
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      /* 초기 스타일 */
+      .topbar {
+        height: 80px;
+        background-color: #222;
+        color: #fff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+        position: fixed;
+        top: 0;
+        width: 92%;
+        transition: top 0.3s;
+        font-size: 20px; /* 텍스트 크기 고정 */
+      }
+
+      /* 상단 바 링크 스타일 */
+      .topbar a {
+        padding: 0px 5px;
+        text-decoration: none;
+        color: #fff;
+        display: block;
+        margin-right: 10px;
+        font-size: 30px;
+      }
+
+      /* 메뉴 링크 스타일 (마우스 호버 시) */
+      .topbar a:hover {
+        background-color: #444;
+      }
+
+      /* 로고 이미지 스타일 */
+      .logo {
+        max-height: 65px; /* 최대 높이 설정 */
+      }
+
+      /* 로그인 정보 스타일 */
+      .login-info {
+        color: #fff;
+        display: flex;
+        align-items: center;
+      }
+
+      .username {
+        margin-right: 10px;
+      }
+
+      /* 로그아웃 버튼 스타일 */
+      .logout-button {
+        background-color: rgb(76, 47, 189);
+        color: #fff;
+        padding: 5px 10px;
+        border: 1;
+        cursor: pointer;
+        margin-right: 10px;
+        position: relative;
+        right: 2%;
+        font-size: 15px;
+      }
+
+      /*설문조사 테이블 설정*/
+    .sur-table {
+      position: absolute;
+      top: 15%;
+      left: 15%;
+      width: 70%;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      padding: 10px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #555;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    .show-button
+    {
+      background-color: #4caf50;
+      color: white;
+      padding: 5px 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 2px;
+    }
+
+    .show-button:hover
+     {
+      background-color: #45a049;
+    }
+
+    /*검색창 스타일*/
+    .search-container {
+      position: absolute;
+      top: 5%;
+      right: 10.5%;
+      display: flex;
+      align-items: center;
+    }
+
+    input[type='text'] {
+      width: 200px;
+      margin-right: 10px;
+    }
+
+    /* 검색 버튼 스타일 */
+    .search-button {
+      background-color: #4caf50;
+      color: white;
+      padding: 5px 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 50px;
+      position: relative;
+      margin-right: -140px;
+    }
+
+    .search-button:hover {
+      background-color: #45a049;
+    }
+    
+    /* 드롭다운 박스 스타일 */
+    select {
+      padding: 5px;
+      border-radius: 4px;
+      margin-right: 5px;
+      width: 85px;
+    }
+
+    input[type='text'] {
+      width: 200px;
+      margin-right: 10px;
+    }
+
+    </style>
+  </head>
+  <body>
+    <!-- 배경 이미지-->
+    <div class="background-image"></div>
+    <div class="white-rectangle"></div>
+
+    <!-- 상단 바 -->
+    <div class="topbar">
+      <a href="/main">
+      <img class="logo" src="/logo" alt="로고 이미지" /></a>
+      <a href="/upload"><b>설문 등록</b></a>
+      <a href="/mypage"><b>마이페이지</b></a>
+      
+      <div class="login-info">
+        <div class="username"><%= name.name %>님 환영합니다.</div>
+        <div class="logout-button" onclick="logout()">로그아웃</div>
+      </div>
+    </div>
+
+    <div class="sur-table" >
+        <h1>설문 목록</h1>
+        <div style="overflow-y: scroll; height:500px;">
+        <table border="1">
+        <thead>
+          <tr>
+            <th>설문 이미지</th>
+            <th>설문 제목</th>
+            <th>설문 기간</th>
+            <th>작성자</th>
+            <th>상세보기</th>
+          </tr>
+        </thead>
+        
+        <% for(var i = 0; i < data.length; i++) { %>
+        <tbody>
+          <!-- Add survey data dynamically here -->
+          <tr>
+            <td rowspan="4">
+              <img
+                src='<%= data[i].thumbnail %>'
+                alt="설문 이미지"
+                style="max-width: 100px; max-height: 100px"
+              />
+            </td>
+            <td id="survey-title"><%= data[i].sur_title %></td>
+            <td id="date"><%= formatDate(data[i].start_date) %> ~ <%= formatDate(data[i].end_date) %></td>
+            <td id="name"><%= data[i].name %></td>
+            <td id="show">
+              <button class="show-button" onclick="window.open('/view_details/<%= data[i].reg_id %>/<%= data[i].sur_title %>','상세보기','width=1000,height=1000,left=2000,top=80,location=no,status=no,scrollbars=yes');">상세보기</button>
+            </td>
+          </tr>
+        </tbody>
+        <% } %>
+      </div>
+      </div>
+          <div class="search-container">
+            <select name="category" id="category">
+              <option value="title">제목</option>
+              <option value="author">작성자</option>
+            </select>
+              <input type="text" id="search" name="search" placeholder="검색어를 입력하세요.">
+              <button class="search-button" onclick="searchSurvey()">검색</button>
+          </div>
+          <% function formatDate(dateString) {
+            const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+            const date = new Date(dateString);
+            return date.toLocaleDateString('ko-KR', options);
+        } %>
+  </body>
+</html>
