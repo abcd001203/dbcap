@@ -563,6 +563,32 @@ app.get('/delet_user/:id', function(req, res) {
         res.send('<script type="text/javascript">alert("접근 권한이 없습니다.");</script>');
     }
   });
+/////관리자_사용자 검색 기능
+app.get('/adm_searchUser', (req, res) => {
+    if (req.session.loggedin) {
+        let id=req.session.userID;
+        let category = req.query.category;
+        let searchValue = req.query.search;
+        
+        //카테고리 구분
+        if (category === 'name') {
+            sql_query = 'SELECT * FROM user WHERE id!= ? AND name LIKE ?;'
+          } else if (category === 'id') {
+            sql_query = 'SELECT * FROM user WHERE id!= ? AND id LIKE ?;'
+          } else if (category === 'grade') {
+            sql_query = 'SELECT * FROM user WHERE id!= ? AND grade LIKE ?;'
+          } else if (category === 'major') {
+            sql_query = 'SELECT * FROM user WHERE id!= ? AND major LIKE ?;'
+          }
+
+      connection.query(sql_query, [id,'%'+searchValue+'%'], function(error,results) {
+      if(error) throw error;
+        res.render('adm_userlist', { data: results,name:ireq.session.userID });
+    });
+    } else {
+      res.send('<script type="text/javascript">alert("로그인이 필요합니다."); document.location.href="/login";</script>');
+    }
+  });
 //이미지 연동
 app.get('/logo', (req, res) => {
     res.sendFile(__dirname + "/img/logo.jpg");
