@@ -583,7 +583,7 @@ app.get('/adm_searchUser', (req, res) => {
 
       connection.query(sql_query, [id,'%'+searchValue+'%'], function(error,results) {
       if(error) throw error;
-        res.render('adm_userlist', { data: results,name:ireq.session.userID });
+        res.render('adm_userlist', { data: results,name:req.session.userID });
     });
     } else {
       res.send('<script type="text/javascript">alert("로그인이 필요합니다."); document.location.href="/login";</script>');
