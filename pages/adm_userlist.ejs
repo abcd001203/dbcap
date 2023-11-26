@@ -10,6 +10,13 @@
         alert('로그아웃 되었습니다.');
         window.location.href = '/logout';
       }
+       // 검색 기능 구현
+       function searchUser() {
+        var category = document.getElementById('category').value;
+        var searchValue = document.getElementById('search').value;
+        
+        window.location.href = '/adm_searchUser?category=' + category + '&search=' + searchValue;
+      }
     </script>
     <style>
       /*배경 이미지 설정*/
@@ -168,6 +175,50 @@
     .delete-button:hover {
       background-color: red;
     }
+    /*검색창 스타일*/
+    .search-container {
+      position: absolute;
+      top: 18%;
+      right: 15%;
+      display: flex;
+      align-items: center;
+    }
+
+    input[type='text'] {
+      width: 200px;
+      margin-right: 10px;
+    }
+
+    /* 검색 버튼 스타일 */
+    .search-button {
+      background-color: #4caf50;
+      color: white;
+      padding: 5px 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 50px;
+      position: relative;
+      margin-right: -140px;
+    }
+
+    .search-button:hover {
+      background-color: #45a049;
+    }
+    
+    /* 드롭다운 박스 스타일 */
+    select {
+      padding: 5px;
+      border-radius: 4px;
+      margin-right: 5px;
+      width: 85px;
+    }
+
+    input[type='text'] {
+      width: 200px;
+      height: 30px;
+      margin-right: 10px;
+    }
     </style>
   </head>
   <body>
@@ -195,6 +246,7 @@
       <div style="overflow-y: scroll; height: 500px;">
         <!-- 회원 목록 테이블 -->
         <div class="sur-table">
+          <h1>내 설문 목록</h1>
           <table border="1">
             <thead>
               <tr>
@@ -221,6 +273,17 @@
           </table>
         </div>
       </div>
+      <!-- 검색창 -->
+    <div class="search-container">
+      <select name="category" id="category">
+        <option value="name">이름</option>
+        <option value="id">학번</option>
+        <option value="grade">학년</option>
+        <option value="major">학과</option>
+      </select>
+        <input type="text" id="search" name="search" placeholder="검색어를 입력하세요.">
+        <button class="search-button" onclick="searchUser()">검색</button>
+    </div>
       <script>
         ///회원 삭제 기능
         function deleteUser(link) {
